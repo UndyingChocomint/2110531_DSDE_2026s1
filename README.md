@@ -1,6 +1,6 @@
 # 2110531 Data Science and Data Engineering @CU (2026/1)
 
-![alt text](https://github.com/pvateekul/2110531_DSDE_2026s1/blob/main/image/meme.jpg)
+![alt text](https://github.com/pvateekul/2110531_DSDE_2026s1/blob/main/image/meme.jpeg)
 
 ## Syllabus:
 
