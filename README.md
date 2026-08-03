@@ -16,6 +16,8 @@
 
 3. (Advanced) Pandas with Youtube stat data: [![Open In Colab](https://github.com/pvateekul/2110531_DSDE_2026s1/blob/main/image/colab-badge.svg?raw=true)](<https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week01_Intro_Pandas/3_Advanced_Pandas_%28Dataset_Trending_YouTube_Video_Statistics%29.ipynb>)
 
+4. (Extra) Python - AI Coding Assistant: [![Open In Colab](https://github.com/pvateekul/2110531_DSDE_2026s1/blob/main/image/colab-badge.svg?raw=true)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/AI_Coder/01_AI_Coding_Assistant_Gemini_Colab_Python_Template.ipynb)
+
 ### Week02: Data Preparation
 
 1. Impute Missing Value: [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week02_DataPrep/Lab2_ImputeMissingValue_Pipeline.ipynb)
