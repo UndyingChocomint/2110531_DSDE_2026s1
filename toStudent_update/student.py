@@ -84,7 +84,16 @@ def Q6(df):
             Hint: Use function round(_, 2)
     '''
     # TODO: Code here
-    return None
+   # print(df['Embarked'].value_counts())
+    # There is S, C, Q performed dummy as follow if S dummy = 10, C = 01, Q = 00 
+
+    # lamda use syntex value then if, but 
+    
+    df['Embarked_Q'] = df['Embarked'].apply(
+    lambda x: 10 if x == 'S' else (1 if x == 'C' else 0)
+    )
+
+    return round(df['Embarked_Q'].mean(),2)
 
 
 def Q7(df):
@@ -96,5 +105,8 @@ def Q7(df):
             Hint: Use function round(_, 2), and train_test_split() from sklearn.model_selection, 
             Don't forget to impute missing values with mean.
     '''
+    
     # TODO: Code here
+
+
     return None
