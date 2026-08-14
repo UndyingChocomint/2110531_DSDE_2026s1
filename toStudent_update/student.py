@@ -15,8 +15,7 @@ def Q1(df):
             How many rows are there in the "titanic_to_student.csv"?
     """
     # TODO: Code here
-    
-    return None
+    return df.shape[0]
 
 
 def Q2(df):
@@ -29,7 +28,16 @@ def Q2(df):
             -Ensure missing values are considered in your calculation. If you use normalize in .value_counts(), please include dropna=False.
     '''
     # TODO: Code here
-    return None
+    print(df)
+    # drop variables with missing > 50% 
+    cols_to_drop = [col for col in df.columns if df[col].isnull().mean() > 0.5]
+    df = df.drop(columns=cols_to_drop)
+    
+    cols_to_check = [col for col in df.columns if col not in ['Age', 'Fare']]
+    flat_ratio = df[cols_to_check].apply(lambda x : x.value_counts(dropna = False,normalize=True).max())
+    cols_to_drop_flat = flat_ratio[flat_ratio > 0.7].index
+    df = df.drop(columns=cols_to_drop_flat)
+    return df.shape[1]
 
 
 def Q3(df):
