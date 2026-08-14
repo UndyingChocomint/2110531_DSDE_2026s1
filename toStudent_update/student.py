@@ -69,7 +69,10 @@ def Q5(df):
             Hint: Use function round(_, 2)
     '''
     # TODO: Code here
-    return None
+    for i in df.index : 
+        if df.loc[i,'Age'] == None: 
+            df.loc[i,'Age'] = df['Age'].mean
+    return round(df['Age'].mean(),2)
 
 
 def Q6(df):
