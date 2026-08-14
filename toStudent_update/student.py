@@ -84,15 +84,11 @@ def Q6(df):
             Hint: Use function round(_, 2)
     '''
     # TODO: Code here
-   # print(df['Embarked'].value_counts())
-    # There is S, C, Q performed dummy as follow if S dummy = 10, C = 01, Q = 00 
-
+    # print(df['Embarked'].value_counts())
     # lamda use syntex value then if, but 
     
-    df['Embarked_Q'] = df['Embarked'].apply(
-    lambda x: 10 if x == 'S' else (1 if x == 'C' else 0)
-    )
-
+    dummies = pd.get_dummies(df['Embarked'], prefix='Embarked').astype(int)
+    df = pd.concat([df, dummies], axis=1) 
     return round(df['Embarked_Q'].mean(),2)
 
 
@@ -107,6 +103,6 @@ def Q7(df):
     '''
     
     # TODO: Code here
-
-
+    train,test = df.train_test_split(0.7, random_state = 123,)
+    
     return None
