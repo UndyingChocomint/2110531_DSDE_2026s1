@@ -50,30 +50,14 @@ def Q3(df):
     return df.shape[0]
 
 
-def Q4(df):
-    '''
-       Problem 4:
-            Handle outliers
-            For the variable “Fare”, replace outlier values with the boundary values
-            If value < (Q1 - 1.5IQR), replace with (Q1 - 1.5IQR)
-            If value > (Q3 + 1.5IQR), replace with (Q3 + 1.5IQR)
-            What is the mean of “Fare” after replacing the outliers (round 2 decimal points)?
-            Hint: Use function round(_, 2)
-    '''
-    # TODO: Code here
+
 def Q4(df):
     Q1 = df['Fare'].quantile(0.25)
     Q3 = df['Fare'].quantile(0.75)
     IQR = Q3 - Q1
     lowerbound = Q1 - 1.5 * IQR
     higherbound = Q3 + 1.5 * IQR
-
-    for i in df.index:
-        if df.loc[i, 'Fare'] < lowerbound:
-            df.loc[i, 'Fare'] = lowerbound
-        elif df.loc[i, 'Fare'] > higherbound:
-            df.loc[i, 'Fare'] = higherbound
-
+    df['Fare'] = df['Fare'].clip(lower=lowerbound, upper=higherbound)
     return round(df['Fare'].mean(), 2)
 
 def Q5(df):
