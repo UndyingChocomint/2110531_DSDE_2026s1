@@ -46,7 +46,8 @@ def Q3(df):
             How many rows do we have left?
     '''
     # TODO: Code here
-    return None
+    df=  df['Survived'].dropna()
+    return df.shape[0]
 
 
 def Q4(df):
@@ -60,8 +61,20 @@ def Q4(df):
             Hint: Use function round(_, 2)
     '''
     # TODO: Code here
-    return None
+def Q4(df):
+    Q1 = df['Fare'].quantile(0.25)
+    Q3 = df['Fare'].quantile(0.75)
+    IQR = Q3 - Q1
+    lowerbound = Q1 - 1.5 * IQR
+    higherbound = Q3 + 1.5 * IQR
 
+    for i in df.index:
+        if df.loc[i, 'Fare'] < lowerbound:
+            df.loc[i, 'Fare'] = lowerbound
+        elif df.loc[i, 'Fare'] > higherbound:
+            df.loc[i, 'Fare'] = higherbound
+
+    return round(df['Fare'].mean(), 2)
 
 def Q5(df):
     '''
