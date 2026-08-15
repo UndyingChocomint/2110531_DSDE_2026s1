@@ -101,8 +101,21 @@ def Q7(df):
             Hint: Use function round(_, 2), and train_test_split() from sklearn.model_selection, 
             Don't forget to impute missing values with mean.
     '''
+
     
     # TODO: Code here
-    train,test = df.train_test_split(0.7, random_state = 123,)
+    # create a porpotion from the data set to use as stratify 
+   # df = df['Survived'].dropna()
     
-    return None
+    df = df.fillna(df.mean(numeric_only=True))
+    y = df['Survived']
+    x = df.drop(columns='Survived')
+    #propotion = x.value_counts(normalize=True)
+    X_train, X_test, y_train, y_test = train_test_split(
+        x, y, test_size=0.3, random_state=123, stratify=y
+    )
+ #   print("Total proportion:\n", y.value_counts(normalize=True))
+ #   print("Train proportion:\n", y_train.value_counts(normalize=True))
+  #  print("Test proportion:\n", y_test.value_counts(normalize=True))
+    train_survived_proportion = y_train.value_counts(normalize=True)[1]
+    return round(train_survived_proportion,2)
