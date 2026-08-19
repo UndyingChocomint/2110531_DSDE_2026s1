@@ -58,13 +58,17 @@
 
 1. Image classification with CNN [`PyTorch Lightning`] (~10 min): [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week04_DL/1_Image_classification_CIFAR10_CNN(lightning).ipynb)
 
-2-1. Image classification with EfficientNetV2s [`PyTorch Lightning`] (~3 min): [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week04_DL/2_Image_classification_Animal_EfficientNetV2(lightning).ipynb)
+2. Image classification with Pretrained Model
 
-2-2. Image classification with EfficientNetb0 (Load a Pretrained Model from Hugging Face) [`PyTorch Lightning`] with Weights & Biases (~3 min): [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week04_DL/2_4_Image_classification_Animal_EfficientNet(lightning)_wandb_HuggingFace.ipynb)
+    2-1. Image classification with EfficientNetV2s [`PyTorch Lightning`] (~3 min): [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week04_DL/2_Image_classification_Animal_EfficientNetV2(lightning).ipynb)
 
-3-1. Object detection with YOLOv8 (basic script) [`PyTorch Lightning`] (~20-30 min): [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week04_DL/3_2_Object_detection_VOCDetection_yolov8_basic.ipynb)
+    2-2. Image classification with EfficientNetb0 (Load a Pretrained Model from Hugging Face) [`PyTorch Lightning`] with Weights & Biases (~3 min): [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week04_DL/2_4_Image_classification_Animal_EfficientNet(lightning)_wandb_HuggingFace.ipynb)
 
-3-2. Object detection with YOLOv8 (custom dataset) [`PyTorch Lightning`]: [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week04_DL/3_3_Object_detection_VOCDetection_yolov8_advanced.ipynb)
+3. Object detection with YOLOv8
+
+    3-1. Object detection with YOLOv8 (basic script) [`PyTorch Lightning`] (~20-30 min): [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week04_DL/3_2_Object_detection_VOCDetection_yolov8_basic.ipynb)
+
+    3-2. Object detection with YOLOv8 (custom dataset) [`PyTorch Lightning`]: [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week04_DL/3_3_Object_detection_VOCDetection_yolov8_advanced.ipynb)
 
 4. Semantic segmentation with deeplabv3 [`PyTorch Lightning`]: [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week04_DL/4_Semantic_segmentation_Camseq_deeplabv3_DataInGD(lightning).ipynb)
 
