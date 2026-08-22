@@ -107,16 +107,16 @@
 
 ### Week06(3): Typhoon LLM 
 
-1. Typhoon Text Model [`API / Hugging Face`]: [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week06_GenerativeAI/7_8_Typhoon_Text_Inference.ipynb)
+1. Typhoon Text Model [`API / Hugging Face`]: [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week06_GenerativeAI/7_Typhoon_Text_Inference.ipynb)
 
 
-2. Typhoon OCR [`API / Hugging Face`]: [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week06_GenerativeAI/7_9_Typhoon_OCR_v1_5_Modified_Demo.ipynb)
+2. Typhoon OCR [`API / Hugging Face`]: [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week06_GenerativeAI/8_1_Typhoon_OCR_v1_5_Modified_Demo.ipynb)
 
 
-    - Other OCR (1) : LightOn OCR [`Hugging Face`]: [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week06_GenerativeAI/7_11_LightOn_OCR.ipynb)
+    - Other OCR (1) : LightOn OCR [`Hugging Face`]: [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week06_GenerativeAI/8_2_LightOn_OCR.ipynb)
 
 
-    - Other OCR (2) : Tesseract OCR: [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week06_GenerativeAI/7_12_Tesseract_OCR.ipynb)
+    - Other OCR (2) : Tesseract OCR: [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week06_GenerativeAI/8_3_Tesseract_OCR.ipynb)
 
 
-3. Fine-tuning a Local LLM (Typhoon-7B) [`Hugging Face`]: [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week06_GenerativeAI/7_10_LLM_Typhoon7b_Finetuning_Huggingface.ipynb)
+3. Fine-tuning a Local LLM (Typhoon-7B) [`Hugging Face`]: [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week06_GenerativeAI/9_LLM_Typhoon7b_Finetuning_Huggingface.ipynb)
