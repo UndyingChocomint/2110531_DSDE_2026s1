@@ -77,3 +77,46 @@
 5. Image classification with ViT from Hugging Face & TensorBoard [`PyTorch`] (~10 min): [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week05_AdvancedML/5_1_Huggingface_image_classification_2025s1.ipynb)
 
 6. Time series Forecasting: Stock Price [`PyTorch`] (~10 min): [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week04_DL/5_Time_series_forecasting_DataInGD_update.ipynb)
+
+### Week06(1): Generative AI (Prompt Engineering, Monitoring, Agentic Workflow, RAG, Fine-tuning)
+
+1. Basic API Call with LangChain [`API`] [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week06_GenerativeAI/1_LLM_Basic_API_Call_LangChain.ipynb)
+
+2. Basic Prompt Engineering [`API`] [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week06_GenerativeAI/2_LLM_Prompt_Engineering_Basic_LangChain.ipynb)
+
+3. Advanced Prompt Engineering [`API`] [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week06_GenerativeAI/3_LLM_Prompt_Engineering_Advanced_LangChain.ipynb)
+
+4. LangChain Playground and Tracking with LangSmith [`API`] [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week06_GenerativeAI/4_LLM_LangChain_Playground_Tracking_with_LangSmith_Groq.ipynb)
+
+5. Basic LangGraph [`API`] [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week06_GenerativeAI/5_LLM_Basic_LangGraph.ipynb)
+
+6. RAG with LangChain and Agentic RAG with LangGraph [`API`] [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week06_GenerativeAI/6_LLM_RAG_LangChain_LangGraph.ipynb)
+
+<!-- 
+7. Creating a Simple ReAct Agent using LangGraph [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week06_GenerativeAI/7_7_LLM_Create_a_ReAct_Agent.ipynb) -->
+
+### Week06(2): Text Classification
+
+1. Text Classification (TF-IDF) [`PyTorch`]: [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week05_AdvancedML/5_2_tfidf_for_Sentiment_Analysis.ipynb)
+
+2. Text Classification (BERT) [`PyTorch`] Training duration ~5mins: [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week05_AdvancedML/5_3_NLP_Transfer_Learning_for_Text_Classification_Using_Hugging_Face_Transformers_Trainer.ipynb#scrollTo=tQqHYsWVTV6D)
+
+3. Text Classification (Phayathaibert) [`PyTorch Lightning`] Training duration ~30mins: [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week05_AdvancedML/5_4_Wongnai_Review_Rating_Classifiacation_(Pytorch_lightning).ipynb)
+
+4. Multi-label Text Classification (microsoft/deberta-v3-small) [`PyTorch`] Training duration ~10mins: [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week05_AdvancedML/5_5_Multi_label_Text_Classification.ipynb)
+
+### Week06(3): Typhoon LLM 
+
+1. Typhoon Text Model [`API / Hugging Face`]: [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week06_GenerativeAI/7_8_Typhoon_Text_Inference.ipynb)
+
+
+2. Typhoon OCR [`API / Hugging Face`]: [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week06_GenerativeAI/7_9_Typhoon_OCR_v1_5_Modified_Demo.ipynb)
+
+
+    - Other OCR (1) : LightOn OCR [`Hugging Face`]: [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week06_GenerativeAI/7_11_LightOn_OCR.ipynb)
+
+
+    - Other OCR (2) : Tesseract OCR: [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week06_GenerativeAI/7_12_Tesseract_OCR.ipynb)
+
+
+3. Fine-tuning a Local LLM (Typhoon-7B) [`Hugging Face`]: [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week06_GenerativeAI/7_10_LLM_Typhoon7b_Finetuning_Huggingface.ipynb)
