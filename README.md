@@ -78,7 +78,7 @@
 
 6. Time series Forecasting: Stock Price [`PyTorch`] (~10 min): [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week04_DL/5_Time_series_forecasting_DataInGD_update.ipynb)
 
-### Week06(1): Generative AI (Prompt Engineering, Monitoring, Agentic Workflow, RAG, Fine-tuning)
+### Week06(1): Generative AI (Prompt Engineering, Monitoring, Agentic Workflow, RAG)
 
 1. Basic API Call with LangChain [`API`] [![Open In Colab](https://raw.githubusercontent.com/pvateekul/2110531_DSDE_2026s1/main/image/colab-badge.svg)](https://colab.research.google.com/github/pvateekul/2110531_DSDE_2026s1/blob/main/code/Week06_GenerativeAI/1_LLM_Basic_API_Call_LangChain.ipynb)
 
