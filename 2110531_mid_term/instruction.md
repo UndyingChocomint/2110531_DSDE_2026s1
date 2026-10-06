@@ -70,10 +70,60 @@ exactly the `image_id`s Kaggle expects (download the *official* `sample_submissi
      2-3 of the 15 cameras for validation), not by random image — this gives a validation score that
      actually estimates cross-camera generalization, matching what the real test set measures.
 
-3. **Baseline model training**
-   - Continue from `yolo_model.ipynb` (Ultralytics YOLOv8 already installed/verified there).
-   - Start with a small pretrained checkpoint (e.g. `yolov8n`/`yolov8s`) fine-tuned on this dataset
-     for a quick baseline before scaling up.
+3. **Train a transformer-based RT-DETR model**
+   - Continue from the `## Step 3` section in `yolo_model.ipynb`, replacing the YOLO11 setup with RT-DETR.
+   - **RT-DETR** (Real-Time Detection Transformer) is a transformer-based object detector from Baidu, available in Ultralytics. It uses a ResNet/HGNetv2 backbone with a transformer encoder-decoder and delivers better accuracy than CNN-based YOLO models at comparable inference speeds. It handles small, densely packed objects (like vehicles in traffic-camera images) more robustly thanks to its attention-based neck.
+   - RT-DETR uses the **same `dataset/data.yaml`**, the same YOLO label format (`.txt` files), and the same Ultralytics training API — no changes to your data preparation pipeline are needed.
+   - Use pretrained weights (`.pt`) rather than training from scratch. Ultralytics downloads the weights automatically if they are not already in the working directory.
+
+   | Checkpoint | Backbone | Relative speed | Capacity/accuracy potential | Memory use | Use |
+   |---|---|---:|---:|---:|---|
+   | `rtdetr-l.pt` | HGNetv2-L | Medium | High | Medium-high | **Recommended main baseline** |
+   | `rtdetr-x.pt` | HGNetv2-X | Slower | Highest | High | Only if `rtdetr-l` improves validation mAP |
+
+   - **Recommendation:** start with `rtdetr-l.pt` for the main run (~50 epochs). Run a 5-epoch smoke test first to verify the pipeline. The RTX 4060 (8 GB VRAM) can handle `rtdetr-l` at `batch=4`; reduce to `batch=2` if you hit an out-of-memory error. Try `rtdetr-x.pt` only if `rtdetr-l` mAP plateaus and you have enough training budget.
+   - Use `imgsz=640` to help detect the small vehicles in these 352×288 images. If CUDA runs out of memory, lower `batch` before lowering `imgsz`.
+
+   The training cell in `yolo_model.ipynb` is reproducible with this code:
+
+   ```python
+   from ultralytics import RTDETR
+
+   MODEL_NAME = "rtdetr-l.pt"  # or "rtdetr-x.pt" for higher capacity
+
+   BATCH_SIZE = {
+       "rtdetr-l.pt": 4,
+       "rtdetr-x.pt": 2,
+   }[MODEL_NAME]
+
+   model = RTDETR(MODEL_NAME)
+
+   results = model.train(
+       data="dataset/data.yaml",
+       epochs=50,
+       imgsz=640,
+       batch=BATCH_SIZE,
+       device=0,       # use "cpu" if no GPU is available
+       workers=2,      # conservative setting for Windows
+       pretrained=True,
+       patience=15,
+       amp=True,
+       plots=True,
+       project="runs/detect",
+       name=MODEL_NAME.replace(".pt", ""),
+       exist_ok=True,
+   )
+   ```
+
+   The best checkpoint is normally saved at:
+
+   ```text
+   runs/detect/rtdetr-l/weights/best.pt
+   ```
+
+   Change both `MODEL_NAME` and the output `name` when comparing models. Select the final model using validation `mAP50-95`, `mAP50`, and per-class AP — especially for rare classes such as Songthaew and Tuktuk — not by training loss alone.
+
+   > **Why RT-DETR over YOLO11?** The transformer encoder in RT-DETR uses multi-scale deformable attention, which captures global context across the full image. This is beneficial for a cross-camera generalization task (train cameras ≠ test cameras) because the model can learn scene-level relationships rather than relying only on local convolutional features. YOLO11 remains a strong and faster baseline; if RT-DETR's training time is prohibitive, fall back to `yolo11s.pt` or `yolo11m.pt`.
 
 4. **Handle class imbalance**
    - Try class-weighted loss, or oversample images containing rare classes (Tuktuk, Songthaew, Van, Bus)
