@@ -1,174 +1,145 @@
 # Mid-term Project — Vehicle Detection (Kaggle: `2110531-dsde-2026-1`)
 
-## ⚠️ Access note
-`https://www.kaggle.com/competitions/2110531-dsde-2026-1` (and its `/overview`, `/data`, `/evaluation` tabs)
-returned **HTTP 404** on every attempt made while writing this file. That almost always means the
-competition is restricted to logged-in, enrolled participants (or isn't public yet) — it is not something
-I can read without your Kaggle session. **Log in and open the page yourself** to confirm the official rules,
-deadline, and scoring metric. Everything below is reverse-engineered from the files already in this folder
-(`data.yaml`, `train.csv`, `sample_submission.csv`, `train/`, `test/`) and should be treated as a working
-hypothesis, not the official spec.
-
-## Task type (inferred)
-Object detection on traffic-camera images, 8 vehicle classes (from `data.yaml`):
+## Task
+Object detection on traffic-camera images, 8 vehicle classes:
 
 ```
 0 Car  1 Motorcycle  2 Bus  3 Truck  4 Tuktuk  5 Van  6 Pickup  7 Songthaew
 ```
 
-This lines up with the YOLO setup already started in `yolo_model.ipynb`.
+---
 
-## Data inventory (verified by direct inspection)
+## Project Files
+
+### `data_exploration.py`
+Standalone script for understanding the dataset before training.
+Run this first to inspect the data.
+- Prints class distribution (% of each vehicle class in `train.csv`)
+- Counts unique images and how many boxes appear per image
+- Reports average and std of objects per image, broken down per class
+
+```bash
+python data_exploration.py
+```
+
+---
+
+### `data.yaml`
+YOLO dataset config file. Points the model to the dataset folder structure.
+
+```
+path: ./dataset
+train: images/train
+val:   images/val
+nc: 8
+names: [Car, Motorcycle, Bus, Truck, Tuktuk, Van, Pickup, Songthaew]
+```
+
+---
+
+### `yolo_model.ipynb`
+Main notebook. Run cells top to bottom. Contains all steps from raw data to `submission.csv`.
+
+#### Run order
+
+| Cell | What it does |
+|---|---|
+| 0 | Check Ultralytics + environment |
+| 1 | Check GPU (nvidia-smi) |
+| 5 | Write `data.yaml` |
+| 16 | Preprocess `train.csv` → YOLO label format, split train/val by camera |
+| 17 | Oversample rare classes — delete old copies, create new ones |
+| 18 | Train RT-DETR model |
+| 21 | Run inference on test set, build `submission.csv` |
+
+> Cells 7–14 are the step-by-step equivalent of Cell 16. Run either Cell 16 **or** Cells 7–14, not both.
+
+#### Cell 16 — Preprocessing
+Reads `train.csv` (pixel bounding boxes) and converts to YOLO normalized format `(x_center, y_center, width, height)`.
+Splits images into train/val by **camera ID** — not randomly — so validation reflects performance on unseen cameras.
+
+- Val cameras held out: `172`, `229`, `1437`
+- Result: `dataset/images/train` (2,297 images), `dataset/images/val` (592 images)
+
+#### Cell 17 — Oversampling
+Fixes class imbalance by physically copying images + label files for rare classes into `dataset/images/train`.
+Automatically removes previous copies before re-running.
+
+| Class | Name | Extra copies |
+|---|---|---|
+| 7 | Songthaew | ×4 |
+| 4 | Tuktuk | ×3 |
+| 5 | Van | ×2 |
+| 2 | Bus | ×2 |
+| 6 | Pickup | ×1 |
+| 3 | Truck | ×1 |
+| 0 | Car | — |
+| 1 | Motorcycle | — |
+
+> Val split is never oversampled — kept original for honest evaluation.
+
+#### Cell 18 — Training
+
+| Parameter | Value |
+|---|---|
+| Model | `rtdetr-l.pt` |
+| Epochs | 50 |
+| Patience | 10 |
+| Batch | 4 |
+| Image size | 640 |
+| Cache | `"disk"` |
+| Device | GPU 0 |
+
+Best checkpoint saved to: `runs/detect/rtdetr-l/weights/best.pt`
+
+#### Cell 21 — Inference
+
+| Parameter | Value |
+|---|---|
+| Weights | `runs/weights/best.pt` |
+| Confidence threshold | 0.25 |
+| IoU threshold | 0.45 |
+| Image size | 640 |
+
+Outputs `submission.csv`. Images with no detections get one dummy row so every `image_id` appears at least once.
+
+---
+
+## Data inventory
 
 | File / folder | Contents |
 |---|---|
-| `train/train/` | 2,991 images from **15** camera locations: `12,172,180,182,214,222,229,231,232,244,1066,1407,1426,1427,1437` |
-| `test/test/` | 1,013 images from **5** camera locations: `227,1068,1072,1192,1439` — **none overlap with the train cameras.** The task is generalizing to unseen camera locations, not just unseen images. |
-| `train.csv` | 27,396 ground-truth boxes. Columns: `id, image_id, class_id, x1, y1, x2, y2` (pixel coordinates, no confidence). |
-| `sample_submission.csv` | 997 rows. Columns: `id, image_id, class_id, confidence, x1, y1, x2, y2`, all filled with placeholder values (`class_id=0`, `confidence=0.01`, box `[0,0,1,1]`). |
-| `data.yaml` | YOLO dataset config (classes + expected `images/train`, `images/val` layout — note this doesn't match the current `train/train`, `test/test` layout, so you'll need to reorganize or symlink). |
+| `train/train/` | 2,991 images, 15 camera locations |
+| `test/test/` | 1,013 images, 5 camera locations (none overlap with train) |
+| `train.csv` | 27,396 ground-truth boxes — `id, image_id, class_id, x1, y1, x2, y2` |
+| `sample_submission.csv` | Format template — 997 rows, placeholder values |
+| `dataset/` | Generated by Cell 16/17 — do not edit manually |
 
-Class imbalance in `train.csv` (box count by class):
+### Class distribution in `train.csv`
 
 ```
-0 Car         17,762
-1 Motorcycle   6,563
-3 Truck        1,356
-6 Pickup         497
-2 Bus            482
-5 Van            354
-4 Tuktuk         265
-7 Songthaew      117
+class 0  Car           17,762  (64.8%)   ← dominant
+class 1  Motorcycle     6,563  (24.0%)
+class 3  Truck          1,356  ( 4.9%)
+class 2  Bus              482  ( 1.8%)
+class 6  Pickup           497  ( 1.8%)
+class 5  Van              354  ( 1.3%)
+class 4  Tuktuk           265  ( 1.0%)
+class 7  Songthaew        117  ( 0.4%)   ← 152× less than Car
 ```
 
-Cars and motorcycles dominate; Songthaew/Tuktuk/Van/Bus are rare — plan for class-imbalance handling
-(class weighting, focal loss, oversampling rare-class images, or augmentation) rather than ignoring it.
+### ⚠️ Data discrepancy
+`sample_submission.csv` has **997** image IDs but `test/test/` has **1,013** files.
+Cell 21 predicts all 1,013 regardless. Confirm with TA whether the 16 extra are scored.
 
-### ⚠️ Data discrepancy to confirm with the instructor/TA
-`sample_submission.csv` lists only **997** unique `image_id`s, but `test/test/` contains **1,013** image
-files — **16 test images have no row in the sample submission**. Before building your submission script
-around `sample_submission.csv`'s image list, confirm whether:
-- those 16 images are intentionally excluded from scoring, or
-- the sample file is simply incomplete and the real test set to predict is all 1,013 images.
+---
 
-If in doubt, generate predictions for all 1,013 test images, but build your final `submission.csv` to match
-exactly the `image_id`s Kaggle expects (download the *official* `sample_submission.csv` from the Kaggle
-"Data" tab once you can access it, and diff it against this local copy — they may differ).
+## Iteration checklist
 
-## Suggested subtasks, in the order you'd actually complete and submit them
-
-1. **EDA (mostly done)** — `data_exploration.py` already covers class distribution and boxes-per-image
-   stats. Extend it to: box size/aspect-ratio distribution per class, and a visual check of a few images
-   per camera to see lighting/angle differences between train and test cameras.
-
-2. **Convert `train.csv` → YOLO label format**
-   - YOLO needs one `.txt` per image with `class_id x_center y_center width height`, all normalized
-     [0,1] by image width/height.
-   - Reorganize into the layout `data.yaml` expects: `dataset/images/train`, `dataset/images/val`,
-     `dataset/labels/train`, `dataset/labels/val`.
-   - Since test cameras don't overlap train cameras, **split train/val by camera id** (e.g. hold out
-     2-3 of the 15 cameras for validation), not by random image — this gives a validation score that
-     actually estimates cross-camera generalization, matching what the real test set measures.
-
-3. **Train a transformer-based RT-DETR model**
-   - Continue from the `## Step 3` section in `yolo_model.ipynb`, replacing the YOLO11 setup with RT-DETR.
-   - **RT-DETR** (Real-Time Detection Transformer) is a transformer-based object detector from Baidu, available in Ultralytics. It uses a ResNet/HGNetv2 backbone with a transformer encoder-decoder and delivers better accuracy than CNN-based YOLO models at comparable inference speeds. It handles small, densely packed objects (like vehicles in traffic-camera images) more robustly thanks to its attention-based neck.
-   - RT-DETR uses the **same `dataset/data.yaml`**, the same YOLO label format (`.txt` files), and the same Ultralytics training API — no changes to your data preparation pipeline are needed.
-   - Use pretrained weights (`.pt`) rather than training from scratch. Ultralytics downloads the weights automatically if they are not already in the working directory.
-
-   | Checkpoint | Backbone | Relative speed | Capacity/accuracy potential | Memory use | Use |
-   |---|---|---:|---:|---:|---|
-   | `rtdetr-l.pt` | HGNetv2-L | Medium | High | Medium-high | **Recommended main baseline** |
-   | `rtdetr-x.pt` | HGNetv2-X | Slower | Highest | High | Only if `rtdetr-l` improves validation mAP |
-
-   - **Recommendation:** start with `rtdetr-l.pt` for the main run (~50 epochs). Run a 5-epoch smoke test first to verify the pipeline. The RTX 4060 (8 GB VRAM) can handle `rtdetr-l` at `batch=4`; reduce to `batch=2` if you hit an out-of-memory error. Try `rtdetr-x.pt` only if `rtdetr-l` mAP plateaus and you have enough training budget.
-   - Use `imgsz=640` to help detect the small vehicles in these 352×288 images. If CUDA runs out of memory, lower `batch` before lowering `imgsz`.
-
-   The training cell in `yolo_model.ipynb` is reproducible with this code:
-
-   ```python
-   from ultralytics import RTDETR
-
-   MODEL_NAME = "rtdetr-l.pt"  # or "rtdetr-x.pt" for higher capacity
-
-   BATCH_SIZE = {
-       "rtdetr-l.pt": 4,
-       "rtdetr-x.pt": 2,
-   }[MODEL_NAME]
-
-   model = RTDETR(MODEL_NAME)
-
-   results = model.train(
-       data="dataset/data.yaml",
-       epochs=50,
-       imgsz=640,
-       batch=BATCH_SIZE,
-       device=0,       # use "cpu" if no GPU is available
-       workers=2,      # conservative setting for Windows
-       pretrained=True,
-       patience=15,
-       amp=True,
-       plots=True,
-       project="runs/detect",
-       name=MODEL_NAME.replace(".pt", ""),
-       exist_ok=True,
-   )
-   ```
-
-   The best checkpoint is normally saved at:
-
-   ```text
-   runs/detect/rtdetr-l/weights/best.pt
-   ```
-
-   Change both `MODEL_NAME` and the output `name` when comparing models. Select the final model using validation `mAP50-95`, `mAP50`, and per-class AP — especially for rare classes such as Songthaew and Tuktuk — not by training loss alone.
-
-   > **Why RT-DETR over YOLO11?** The transformer encoder in RT-DETR uses multi-scale deformable attention, which captures global context across the full image. This is beneficial for a cross-camera generalization task (train cameras ≠ test cameras) because the model can learn scene-level relationships rather than relying only on local convolutional features. YOLO11 remains a strong and faster baseline; if RT-DETR's training time is prohibitive, fall back to `yolo11s.pt` or `yolo11m.pt`.
-
-4. **Handle class imbalance**
-   - Try class-weighted loss, or oversample images containing rare classes (Tuktuk, Songthaew, Van, Bus)
-     during training.
-
-5. **Local validation**
-   - Evaluate mAP (and per-class AP) on your held-out cameras. Compare qualitatively on a handful of
-     images from each of the 5 real test cameras to sanity-check the domain gap.
-
-6. **Inference on `test/test/`**
-   - Run the trained model on every test image, collect `(class_id, confidence, x1, y1, x2, y2)` per
-     detected box.
-
-7. **Build `submission.csv`**
-   - One row per predicted box (not one row per image) with columns `id, image_id, class_id, confidence,
-     x1, y1, x2, y2`, exactly matching `sample_submission.csv`'s schema and column order.
-   - `id` is just a running row index.
-   - Resolve the 997-vs-1013 discrepancy from the step above before finalizing.
-
-8. **Submit to Kaggle & iterate**
-   - Upload `submission.csv` on the competition's "Submit Predictions" page, check the leaderboard score,
-     then iterate on steps 3-6 (bigger model, more augmentation, better confidence threshold / NMS tuning,
-     per-class threshold tuning for rare classes).
-
-## What `sample_submission.csv` is for
-
-`sample_submission.csv` is a **template**, not data to analyze or train on. Its job is to tell you exactly
-how Kaggle expects your prediction file to be structured, so the grading script can read it automatically:
-
-- **Which rows/images to cover** — it lists the `image_id`s Kaggle will score you on (here, nominally the
-  test-set images, modulo the 997-vs-1013 discrepancy noted above).
-- **Exact column names and order** — `id, image_id, class_id, confidence, x1, y1, x2, y2`. If your
-  submission is missing a column, has extra columns, or uses different column names, Kaggle's scorer will
-  likely reject the file or score it incorrectly.
-- **Row granularity** — because it has a `confidence` column and multiple rows can share the same
-  `image_id`, each row represents **one predicted bounding box**, not one row per image. An image with
-  3 detected vehicles should produce 3 rows.
-- **Value types/format** — e.g. `class_id` as an integer matching `data.yaml`'s class indices, `confidence`
-  as a float probability, and `x1,y1,x2,y2` as a bounding box in the same coordinate convention as
-  `train.csv` (pixel coordinates, top-left/bottom-right corners).
-- **A valid, submittable placeholder** — because every row already has *some* value (even if dummy), you
-  could technically submit `sample_submission.csv` unmodified right now just to confirm your submission
-  pipeline and file format are accepted, before you've trained any model. It will naturally score very
-  poorly (confidence 0.01, degenerate 1×1 box), but it's a quick way to validate the submission *process*
-  itself.
-
-In short: never submit `sample_submission.csv`'s *values* as your answer — only follow its *shape* when
-building your real `submission.csv`.
+| Try | Expected effect |
+|---|---|
+| Re-run Cell 17 after adjusting multipliers | Change class balance without touching raw data |
+| Switch to `rtdetr-x.pt` if model plateaus | Higher capacity, set `batch=2` |
+| Raise `imgsz` to 800 | Better detection of small vehicles, needs more VRAM |
+| Raise `epochs` to 100 | Use with `patience=10` to auto-stop |
+| Tune `CONF_THRESHOLD` after training | Raise to reduce false positives on dominant classes |
