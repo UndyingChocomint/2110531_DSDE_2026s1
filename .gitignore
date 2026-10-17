@@ -1,3 +1,8 @@
 .DS_Store
 .ipynb_checkpoints/
 .python-version
+2110531_mid_term/dataset/
+2110531_mid_term/dataset_balanced
+2110531_mid_term/test
+2110531_mid_term/train
+*.pt

@@ -1,0 +1,7 @@
+
+  path: ./dataset
+  train: images/train
+  val: images/val
+  nc: 8
+  names: ["Car", "Motorcycle", "Bus", "Truck", "Tuktuk", "Van", "Pickup", "Songthaew"]
+  
