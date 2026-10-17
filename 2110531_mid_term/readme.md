@@ -44,7 +44,7 @@ Upload `submission.csv` to Kaggle
 ## 4. Reproduce the result without retraining
 
 Put the submitted `best.pt` at `runs/detect/rtdetr-l_balanced/weights/best.pt` and run only **cell 18**.
-( the best.pt is not able to put it in git so I upload to google drive instead : https://drive.google.com/file/d/14W_G4McqjF0Kx39hbVtCVe1-FNcOoM16/view?usp=sharing)
+ the best.pt is not able to put it in git so I upload to google drive instead : https://drive.google.com/file/d/14W_G4McqjF0Kx39hbVtCVe1-FNcOoM16/view?usp=sharing.
 ## 5. Optional: validation metrics, per-class table and confusion matrices
 
 ```python
