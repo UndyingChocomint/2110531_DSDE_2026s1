@@ -9,7 +9,7 @@ def main():
     # Dynamically call the method on the hw object and print the result
     input_command = f"hw.{input_string}()"
     print(f"{eval(input_command)}")
-
+    
 if __name__ == "__main__":
     main()
     

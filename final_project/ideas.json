@@ -1,0 +1,47 @@
+[
+    {
+        "Name": "camera_archetype_clustering",
+        "Title": "Discovering Bangkok Traffic Archetypes via Temporal Vehicle-Count Clustering",
+        "Experiment": "1. Run a YOLO-based vehicle detector on all images to produce a (camera_id, hour_of_day, vehicle_type, count) table. 2. Aggregate to a 24-dimensional hourly-average feature vector per camera. 3. Apply k-means (k=3..8) and select k by silhouette score. 4. Overlay cluster labels on the Folium/Leaflet map from cctv_info.csv coordinates. 5. Profile each cluster: peak hour, dominant vehicle type, average daily total. 6. Expose cluster assignment + profile in the BI dashboard as the 'Transport Administrator' view.",
+        "Interestingness": 7,
+        "Feasibility": 8,
+        "Novelty": 5,
+        "Score": 6
+    },
+    {
+        "Name": "visibility_count_correlation",
+        "Title": "Disentangling Real Traffic Drops from Visibility Degradation in Urban CCTV Streams",
+        "Experiment": "1. Compute per-image features: mean brightness, contrast (std of pixel values), BRISQUE or Laplacian-variance as blur proxy. 2. Label frames into four conditions: clear, night, rainy/wet-road, glare. 3. Fit a linear model: vehicle_count ~ condition + camera_id + hour_of_day. 4. Report condition coefficients as 'visibility penalty'. 5. Flag cameras where >20% of frames fall in degraded conditions for the data-quality dashboard view. 6. Use residuals as the 'corrected count' for downstream analyses.",
+        "Interestingness": 8,
+        "Feasibility": 7,
+        "Novelty": 7,
+        "Score": 7
+    },
+    {
+        "Name": "co2_proxy_heatmap",
+        "Title": "A Camera-Derived Proxy for Hourly CO2 Emissions Across Bangkok Districts",
+        "Experiment": "1. Use detected vehicle-type counts (car, motorcycle, bus, truck) from the clean table. 2. Apply published g CO2/km emission factors (IPCC Tier 1 defaults) and an assumed average speed from the congestion estimate. 3. Compute camera-hour CO2 proxy = sum_over_types(count * ef * speed_factor). 4. Aggregate to district level using cctv_info.csv coordinates and a Bangkok district shapefile (open data). 5. Build a choropleth layer in the BI dashboard. 6. Report sensitivity: +-20% on speed assumption, +-1 vehicle count error.",
+        "Interestingness": 8,
+        "Feasibility": 6,
+        "Novelty": 6,
+        "Score": 6
+    },
+    {
+        "Name": "rolling_baseline_anomaly",
+        "Title": "Near-Real-Time Traffic Anomaly Detection Using Rolling Hourly Baselines",
+        "Experiment": "1. From the clean count table, compute per-camera per-weekday per-hour mean and std over a 4-week rolling window. 2. For each new observation compute z = (count - mean) / std. 3. Flag |z| > 2.5 as anomalous. 4. Evaluate on the held-out final week: precision/recall against a hand-labelled set of 20 known-quiet and 20 known-busy hours per camera. 5. Add an 'Alerts' panel to the BI dashboard showing the top-5 current anomalies. 6. Document Airflow/Prefect DAG that re-computes baselines nightly.",
+        "Interestingness": 7,
+        "Feasibility": 7,
+        "Novelty": 5,
+        "Score": 6
+    },
+    {
+        "Name": "cross_camera_travel_time",
+        "Title": "Estimating Inter-Intersection Travel Time from Count Cross-Correlation Across Adjacent CCTV Cameras",
+        "Experiment": "1. Identify pairs of cameras within 500 m of each other using cctv_info.csv Haversine distances. 2. For each pair compute cross-correlation of the 5-minute vehicle-count time series with lag 0..10 min. 3. The lag of peak correlation is the estimated travel time between the two intersections. 4. Validate on 3 manually confirmed adjacent camera pairs using Google Maps typical travel times as reference. 5. Build a lightweight 'route speed' layer on the map for the Rider persona view. 6. Report confidence: pairs with cross-correlation peak < 0.3 are excluded as unreliable.",
+        "Interestingness": 9,
+        "Feasibility": 5,
+        "Novelty": 8,
+        "Score": 7
+    }
+]
